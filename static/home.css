@@ -1,0 +1,45 @@
+body{
+    background-color: #fffff2;
+    font-family: 'Sniglet', cursive;
+    text-align: justify;
+
+}
+
+.w3-top{
+    background-color: #a8ede4;
+}
+.oh-mama{
+    background-color: #a8ede4;
+    align-items: center;
+}
+
+.title-text{
+    color: white;
+    text-shadow: 2px 2px #9162ff;
+    font-family: 'Caveat Brush', cursive;
+    font-size: 35px;
+    height: 20px;
+}
+
+
+.text{
+    font-size: 24px;
+
+}
+
+.moreText{
+    display: none;
+}
+
+
+.read-more-btn{
+    padding: 15px 60px;
+    background-color: aliceblue;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.text.show-more .moreText{
+    display: inline;
+}
