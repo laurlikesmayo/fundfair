@@ -36,9 +36,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Sniglet', cursive;}
 <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()"
   class="w3-bar-item w3-button">☰</a>
-  <a href="#home" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
-  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
-  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">Create</a>
+  <a href="/" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
+  <a href="/about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
+  <a href="/create" onclick="w3_close()" class="w3-bar-item w3-button">Create</a>
+  <a href="/explore" onclick="w3_close()" class="w3-bar-item w3-button">Explore</a>
 </nav>
 
 <!-- Top menu -->
@@ -52,76 +53,68 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Sniglet', cursive;}
   
 <!-- !PAGE CONTENT! -->
 <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
-    <h1>Events</h1>
+    <li class = "title-li">
+      <h1>Events - Up and coming</h1>
+      <button class = "learn-more-btn"> learn more </button>
+
+    </li>
+    
 
 
 
   <!-- First Photo Grid-->
   
   <div class="w3-row-padding w3-padding-16 w3-center" id="food">
-    <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Super Idol's Smile!" style="width:100%">
-      <h3>The Perfect Sandwich, A Real NYC Classic</h3>
-      <p class='text'>Super idol 的笑容都没你的甜,八月正午的阳光都没你耀眼, 热爱105°的你滴滴清纯的蒸馏水!💦🥤😂 <span class="moreText">Super idol 的笑容都没你的甜,八月正午的阳光都没你耀眼, 热爱105°的你滴滴清纯的蒸馏水!💦🥤😂 Super idol 的笑容都没你的甜,八月正午的阳光都没你耀眼, 热爱105°的你滴滴清纯的蒸馏水!💦🥤😂 </span></p>
-      <button class='read-more-btn' onclick='myFunction()'>Read More</button>
-
-      <!-- <script>
-        const text = document.querySelector('.text');
-        function myFunction(){
-          
-          text.classList.toggle('show-more')
-        }
-      </script>
-   -->
-
-      
-      
-      
+    <div  class="w3-quarter">
+      <img src="https://media.wired.com/photos/5f74d2f4df8a35780989d792/1:1/w_2160,h_2160,c_limit/Genshin%20Impact%20_Keyart.png" alt="Super Idol's Smile!" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
+  
+   
     </div>
     
     
 
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Steak" style="width:100%">
-      <h3>Let Me Tell You About This Steak</h3>
-      <p>Once again, some random text to lorem lorem lorem lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+      <img src="https://pbs.twimg.com/media/FGNmt_5WYAIkI6H?format=jpg&name=4096x4096" alt="Steak" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
 
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Cherries" style="width:100%">
-      <h3>Cherries, interrupted</h3>
-      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
-      <p>What else?</p>
+      <img src="https://video-images.vice.com/articles/5f7ce58178f74d009cc79ed3/lede/1602020874991-genshin124k.jpeg?crop=0.5625xw:1xh;center,center" alt="Cherries" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
 
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Pasta and Wine" style="width:100%">
-      <h3>Once Again, Robust Wine and Vegetable Pasta</h3>
-      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/31cca890-657d-4f07-9210-b4d6d3d38796/deh9x79-32376130-1c64-4308-b9fc-15deab952a8a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzMxY2NhODkwLTY1N2QtNGYwNy05MjEwLWI0ZDZkM2QzODc5NlwvZGVoOXg3OS0zMjM3NjEzMC0xYzY0LTQzMDgtYjlmYy0xNWRlYWI5NTJhOGEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YMr7L_DvpwCbXKTHq2sm-l63Tv__SfwMHztCB3fAYYE" alt="Pasta and Wine" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
   </div>
   
   <!-- Second Photo Grid-->
   <div class="w3-row-padding w3-padding-16 w3-center">
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Popsicle" style="width:100%">
-      <h3>All I Need Is a Popsicle</h3>
-      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+      <img src="https://image.api.playstation.com/pr/bam-art/143/455/cee1bdea-9e18-402e-b495-6a449e1fc47b.png" alt="Popsicle" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Salmon" style="width:100%">
-      <h3>Salmon For Your Skin</h3>
-      <p>Once again, some random text to lorem lorem lorem lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+      <img src="https://pbs.twimg.com/media/FH8dEuqVcAYho-k?format=jpg&name=4096x4096" alt="Salmon" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Sandwich" style="width:100%">
-      <h3>The Perfect Sandwich, A Real Classic</h3>
-      <p>Just some random text, lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+      <img src="https://i.redd.it/mlfq5x4p31371.jpg" alt="Sandwich" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
     <div class="w3-quarter">
-      <img src="https://i1.sndcdn.com/artworks-OCUgHKpfltK6ej4z-IRMXug-t500x500.jpg" alt="Croissant" style="width:100%">
-      <h3>Le French</h3>
-      <p>Lorem lorem lorem lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+      <img src="https://i.redd.it/g1mnqddrugd81.png" alt="Croissant" style="width:100%">
+      <h3>Title of Event</h3>
+      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
     </div>
   </div>
 
@@ -141,12 +134,14 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Sniglet', cursive;}
 
   <!-- About Section -->
   <div class="w3-container w3-padding-32 w3-center">  
-    <h3>About Me, The Food Man</h3><br>
-    <img src="/w3images/chef.jpg" alt="Me" class="w3-image" style="display:block;margin:auto" width="800" height="533">
+    <h3>Create your own charity event!</h3><br>
+    <img src="https://thumbs.dreamstime.com/z/angry-executive-shouting-having-disagreement-employee-group-meeting-mad-boss-manager-conflict-office-scolding-criticizing-139894489.jpg" alt="Me" style="display:block;margin:auto" width="1100" height="600" object-fit="cover">
     <div class="w3-padding-32">
-      <h4><b>I am Who I Am!</b></h4>
-      <h6><i>With Passion For Real, Good Food</i></h6>
-      <p>Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+      <h4><b>Create your charity event and publish it!</b></h4>
+
+      <p>Want to create your own charity event and publish it? Click here to sign up and create one! for more information, you can contact! click the button below to start creating!</p>
+      <button> Lean more </button>
+
     </div>
   </div>
   <hr>
