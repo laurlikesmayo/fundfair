@@ -12,7 +12,7 @@ def createapp():
     app = Flask(__name__)
     app.config['SECRET_KEY']='hello'
     app.config['SQLALCHEMY_DATABASE_URI']='aqlite:///database.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
     db.init_app(app)
     loginmanager = LoginManager(app)
     loginmanager.login_view = '/'
@@ -26,7 +26,7 @@ def createapp():
     from .models import Users
     createdatabase(app)
 
-    # gets the id of the user and filters it
+    #gets the id of the user and filters it
     @loginmanager.user_loader
     def userloader(id):
         return Users.query.filter_by(int(id)).first()
