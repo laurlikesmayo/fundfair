@@ -11,8 +11,8 @@ def createapp():
     #configurations of the app, setting up database and initialising
     app = Flask(__name__)
     app.config['SECRET_KEY']='hello'
-    app.config['SQLALCHEMY_DATABASE_URI']='aqlite:///database.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS']= False
+    app.config['SQLAlchemy_DATABASE_URI']='aqlite:///database.db'
+    app.config['SQLAlchemy_TRACK_MODIFICATIONS']= False
     db.init_app(app)
     loginmanager = LoginManager(app)
     loginmanager.login_view = '/'
@@ -44,7 +44,7 @@ def createapp():
 #creating a database for the website if its not created
 def createdatabase(app):
     if not path.exists("website/database.db"):
-        db.create_all(app=app)
+        db.create_all(app = app)
         print("created")
 
 
