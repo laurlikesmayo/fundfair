@@ -15,7 +15,7 @@ about - about the website and the reasoning behind it
 
 
 
-scripts (using bluepring format)
+scripts (using bluepring format):
 
 init.py - initialises the app, database and web pages (routes and stuff)
 
@@ -24,3 +24,4 @@ views.py - all the page routes and the actual code itself
 models.py - database stuff, makes columns when new user join
 
 app.py - creates the app and runs it
+
