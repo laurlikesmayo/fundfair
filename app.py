@@ -1,13 +1,5 @@
-from flask import Flask, render_template
-from views import views
+from __init__ import createapp
 
-app = Flask(__name__)
-
-app.register_blueprint(views, url_prefix='/admin')
-
-@app.route('/')
-def test():
-    return "<h1>Test<h1>"
-
-if __name__ == "__main__":
-    app.run(debug =True)
+if __name__ == '__main__':
+    app = createapp()
+    app.run(debug=True, port = 5000)
