@@ -6,7 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 #module that hashes the password out
 #//meaning will not store the actual password in database and will store value
 
-views = Blueprint("views", __name__, static_folder = 'static', templates_folder = 'templates')
+views = Blueprint("views", __name__)
+# , static_folder = 'static', templates_folder = 'templates'
 
 
 
@@ -41,6 +42,7 @@ def register():
         email = request.form.get('email')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
+
         username_exists = Users.query.filter_by(username = username).first()
         email_exists = Users.query.filter_by(email = email).first()
         if password1 != password2:
@@ -50,23 +52,23 @@ def register():
         elif len(password1) < 6 or len(username) <6:
             print("Username or password must contain more than 6 characters")
         else:
-            new_user = Users(username = username, email=email, password=generate_password_hash(password1))
+            new_user = Users(username = username, email=email, password=generate_password_hash(password1), )
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
-            return redirect(url_for('views.posts'))
+            return redirect(url_for('views.home'))
 
 
     return render_template("register.html")
 
 
 @login_required
-@views.route('/posts')
-def posts():
-    return "<h1>Testing posts page<h1>"
+@views.route('/home')
+def home():
+    return render_template("home.html")
 
 @login_required
 @views.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('views.home'))
+    return redirect(url_for('views.login'))
