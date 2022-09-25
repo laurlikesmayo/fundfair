@@ -74,7 +74,7 @@ def register():
 def home():
     if 'loggedin' in session:
 
-        return render_template("home.html")
+        return render_template("hi.html")
     else:
         return redirect(url_for('views.login'))
 
