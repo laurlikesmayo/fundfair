@@ -1,5 +1,6 @@
-from flask import Flask, Blueprint, render_template, request, url_for, redirect
+from flask import Flask, Blueprint, render_template, request, url_for, redirect, session, flash
 from .models import Users
+from datetime import timedelta
 from flask_login import login_user, logout_user, login_required 
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash 
@@ -7,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 #//meaning will not store the actual password in database and will store value
 
 views = Blueprint("views", __name__)
+
 # , static_folder = 'static', templates_folder = 'templates'
 
 
@@ -26,6 +28,9 @@ def login():
             if check_password_hash(user.password, password):
                 login_user(user)
                 print('Logged in')
+                session.permanent = True
+                session['loggedin'] = True
+                flash('Log in sucessful', 'info ')
                 return redirect(url_for('views.home')) 
             else:
                 print('Wrong Password')
@@ -56,6 +61,8 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
+            session['loggedin'] = True
+            flash('sign up sucessful', 'info')
             return redirect(url_for('views.home'))
 
 
@@ -63,12 +70,17 @@ def register():
 
 
 @login_required
-@views.route('/home')
+@views.route('/')
 def home():
-    return render_template("home.html")
+    if 'loggedin' in session:
+
+        return render_template("home.html")
+    else:
+        return redirect(url_for('views.login'))
 
 @login_required
 @views.route('/logout')
 def logout():
     logout_user()
+    session.pop('loggedin', None)
     return redirect(url_for('views.login'))

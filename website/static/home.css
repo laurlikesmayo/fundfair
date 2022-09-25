@@ -55,3 +55,13 @@ button{
 
 }
 
+p{
+    color: black;
+    font-family: 'Caveat Brush', cursive;
+}
+
+.messages{
+    margin-left: 250px;
+
+}
+

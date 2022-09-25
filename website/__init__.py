@@ -1,5 +1,5 @@
 from flask import Flask
-
+from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from os import path
@@ -9,6 +9,8 @@ db = SQLAlchemy()
 def createapp():
 
     #configurations of the app, setting up database and initialising
+    app.secret_key = 'hello'
+    app.permanent_session_lifetime = timedelta(days = 5)
 
     app.config['SECRET_KEY']='hello'
     app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///database.db'
