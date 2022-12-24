@@ -2,6 +2,8 @@
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename = 'posts.css')}}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 <h1> blog posts...</h1>
 
 
@@ -9,10 +11,9 @@
 <div class="shadow p-3 mb-5 bg-body rounded">
     <h2>{{ post.title }}</h2>
     By: {{ post.author }}<br/>
-    {{ post.slug }} |
     {{ post.date_posted }}<br/>
     {{ post.content }}<br/>
-    <hr><br>
+    
 </div>
     
 
