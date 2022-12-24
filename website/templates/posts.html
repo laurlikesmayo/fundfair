@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'posts.css')}}">
+<h1> blog posts...</h1>
+
+
+{% for post in posts %}
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <h2>{{ post.title }}</h2>
+    By: {{ post.author }}<br/>
+    {{ post.slug }} |
+    {{ post.date_posted }}<br/>
+    {{ post.content }}<br/>
+    <hr><br>
+</div>
+    
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}
+
+

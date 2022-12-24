@@ -1,0 +1,19 @@
+how to migrate new database
+
+after you make each database you need to migrate
+
+
+flask db migrate -m 'name of migration'
+flask db upgrade
+
+
+THATS all ok then
+
+
+https://youtu.be/ca-Vj6kwK7M
+
+
+refer to this youtube video if you need help
+
+
+thank you 

@@ -1,10 +1,12 @@
 from flask import Flask
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from os import path
 app = Flask(__name__)
-db = SQLAlchemy()
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 def createapp():
 
@@ -26,6 +28,7 @@ def createapp():
 
     #gets the user information from the database 
     from .models import Users
+    from .models import Posts
     createdatabase(app)
 
     #gets the id of the user and filters it

@@ -12,10 +12,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
-
+<link rel="shortcut icon" href="{{ url_for('static', filename='hello.ico') }}">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename = 'index.css')}}">
 
 
 
@@ -34,13 +34,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Sniglet', cursive;}
 
 
 <!-- Sidebar (hidden by default) -->
-<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+<nav class="oh-mama w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()"
   class="w3-bar-item w3-button">☰</a>
   <a href="/" onclick="w3_close()" class="w3-bar-item w3-button">Home</a>
   <a href="/about" onclick="w3_close()" class="w3-bar-item w3-button">About</a>
   <a href="/create" onclick="w3_close()" class="w3-bar-item w3-button">Create</a>
-  <a href="/explore" onclick="w3_close()" class="w3-bar-item w3-button">Explore</a>
+  <a href="/post" onclick="w3_close()" class="w3-bar-item w3-button">Posts</a>
 </nav>
 
 <!-- Top menu -->
@@ -54,9 +54,26 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Sniglet', cursive;}
 
 
 <!-- !PAGE CONTENT! -->
-<div>
-{% block content %} {% endblock %}
-</div>
+<li id = 'messages-list'>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for msg in messages %}
+      <p id = 'messages'>{{msg}}</p>
+ 
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+</li>
+{% block content %} 
+
+
+
+
+
+
+
+{% endblock %}
+
 
 <script>
 // Script to open and close sidebar
