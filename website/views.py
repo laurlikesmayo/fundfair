@@ -101,7 +101,6 @@ def create():
         content = request.form.get('content')
         author = request.form.get('author')
         slug = request.form.get('slug')
-        dateadded=datetime.utcnow
         post = Posts(title=title, content=content, author=author, slug=slug)
 
         db.session.add(post)
@@ -114,9 +113,13 @@ def create():
 
     return render_template("create.html")
 
+@views.route('/post/<int:id>')
+def post(id):
+    post = Posts.query.get_or_404(id)
+    return render_template('post.html', post=post)
 
 @login_required
-@views.route('/post')
+@views.route('/posts')
 def posts():
     posts = Posts.query.order_by(Posts.date_added)
 

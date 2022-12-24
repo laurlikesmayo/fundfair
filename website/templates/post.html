@@ -7,21 +7,21 @@
 <h1> blog posts...</h1>
 
 
-{% for post in posts %}
+
 <div class="shadow p-3 mb-5 bg-body rounded">
     <h2>{{ post.title }}</h2>
     By: {{ post.author }}<br/>
     {{ post.date_posted }}<br/>
     {{ post.content }}<br/>
-    <a href="{{ url_for('post', id=post.id) }}">View post</a>
+    
 </div>
     
 
-{% endfor %}
 
 
 
 
 
 {% endblock %}
+
 
