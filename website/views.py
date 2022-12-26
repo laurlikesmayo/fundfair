@@ -2,10 +2,16 @@ from flask import Flask, Blueprint, render_template, request, url_for, redirect,
 from .models import Users
 from .models import Posts
 from datetime import timedelta, datetime
-from flask_login import login_user, logout_user, login_required 
+from flask_login import login_user, logout_user, login_required, UserMixin
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash 
-import smtplib
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError, TextAreaField
+from wtforms.validators import DataRequired, EqualTo, Length
+from wtforms.widgets import TextArea
+from flask_ckeditor import CKEditorField
+from flask_wtf.file import FileField
+
 #module that hashes the password out
 #//meaning will not store the actual password in database and will store value
 
@@ -13,7 +19,14 @@ views = Blueprint("views", __name__)
 
 # , static_folder = 'static', templates_folder = 'templates'
 
-
+class PostForm(FlaskForm):
+	title = StringField("Title", validators=[DataRequired()])
+	#content = StringField("Content", validators=[DataRequired()], widget=TextArea())
+	content = CKEditorField('Content', validators=[DataRequired()])
+	
+	#author = StringField("Author")
+	slug = StringField("Slug", validators=[DataRequired()])
+	submit = SubmitField("Submit")
 
 
 #app routes
@@ -109,7 +122,7 @@ def create():
         flash('Event created sucessfully')
         print('post sucessful')
 
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.posts'))
 
     return render_template("create.html")
 
@@ -124,3 +137,24 @@ def posts():
     posts = Posts.query.order_by(Posts.date_added)
 
     return render_template("posts.html", posts=posts)
+
+@views.route('/post/edit/<int:id>', methods=['GET', 'POST'])
+def edit_post(id):
+    post = Posts.query.order_by(Posts.date_added)
+    if request.method == 'POST':
+        if request.form.validate_on_Submit():
+                
+            title = request.form.get("title")
+            content = request.form.get('content')
+            author = request.form.get('author')
+            slug = request.form.get('slug')
+
+
+
+
+    
+
+
+@views.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404

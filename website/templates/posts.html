@@ -13,7 +13,7 @@
     By: {{ post.author }}<br/>
     {{ post.date_posted }}<br/>
     {{ post.content }}<br/>
-    <a href="{{ url_for('post', id=post.id) }}">View post</a>
+    <a href="{{ url_for('views.post', id=post.id) }}" class="btn btn-outline-secondary">View post</a>
 </div>
     
 
