@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, render_template, request, url_for, redirect,
 from .models import Users
 from .models import Posts
 from datetime import timedelta, datetime
-from flask_login import login_user, logout_user, login_required, UserMixin
+from flask_login import login_user, logout_user, login_required, UserMixin, current_user
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash 
 from flask_wtf import FlaskForm
@@ -21,13 +21,11 @@ views = Blueprint("views", __name__)
 
 class PostForm(FlaskForm):
 	title = StringField("Title", validators=[DataRequired()])
-	#content = StringField("Content", validators=[DataRequired()], widget=TextArea())
-	content = CKEditorField('Content', validators=[DataRequired()])
+	content = StringField('Content', validators=[DataRequired()])
 	
-	#author = StringField("Author")
+	author = StringField("Author")
 	slug = StringField("Slug", validators=[DataRequired()])
 	submit = SubmitField("Submit")
-
 
 #app routes
 
@@ -135,26 +133,48 @@ def post(id):
 @views.route('/posts')
 def posts():
     posts = Posts.query.order_by(Posts.date_added)
-
     return render_template("posts.html", posts=posts)
 
 @views.route('/post/edit/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
-    post = Posts.query.order_by(Posts.date_added)
-    if request.method == 'POST':
-        if request.form.validate_on_Submit():
+    post = Posts.query.get_or_404(id)
+    form = PostForm()
+    if form.validate_on_submit():
                 
-            title = request.form.get("title")
-            content = request.form.get('content')
-            author = request.form.get('author')
-            slug = request.form.get('slug')
+        post.title = form.title.data
+        post.content = form.content.data
+        post.author =form.author.data
+        post.slug = form.slug.data
 
-
-
-
+        db.session.add(post)
+        db.session.commit()
+        flash("Post has been updated.")
+        return redirect(url_for("views.post", id=post.id))
     
+    form.title.data = post.title
+    form.author.data = post.author
+    form.slug.data = post.slug
+    form.content.data=post.content
+    return render_template('edit_post.html', form=form)
 
+@views.route('post/delete/<int:id>')
+def delete_post(id):
+    post_to_del = Posts.query.get_or_404(id)
+    try:
+        db.session.delete(post_to_del)
+        db.session.commit()
+        flash('Blog post was deleted')
+        posts = Posts.query.order_by(Posts.date_added)
+        return render_template("posts.html", posts=posts)
+    except:
+        flash('There was an error. Please try again.')
+        return redirect(url_for('views.posts'))
 
+@views.route('/account')
+def account():
+    id = current_user.id
+    user=Users.query.get_or_404(id)
+    return render_template('account.html', user=user)
 @views.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404

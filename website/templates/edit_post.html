@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<br/>
+<h2>Edit Post...</h2>
+<br/>
+<div class="shadow p-3 mb-5 bg-body rounded">
+	<form method="POST">
+		{{ form.hidden_tag() }}
+
+		{{ form.title.label(class="form-label") }}
+
+		{{ form.title(class="form-control") }}
+		<br/>
+
+		 
+		{{ form.slug.label(class="form-label") }}
+
+		{{ form.slug(class="form-control") }}
+		<br/>
+		
+		{{ form.content.label(class="form-label") }}
+
+		{{ form.content(class="form-control", rows="10") }}
+		<br/>
+
+		
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+
+
+	
+</div>
+
+<a href="{{ url_for('views.posts')}}" class="btn btn-outline-secondary btn-sm">Back To Blog</a>
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -4,13 +4,19 @@ body{
     text-align: justify;
 
 }
+li{list-style-type: none;}
+
+ul{list-style-type:none;}
 
 .w3-top{
     background-color: #a8ede4;
+    position: relative;
 }
 .oh-mama{
+    position: relative;
     background-color: #a8ede4;
     align-items: center;
+    width: 100%;
 }
 
 .title-text{
@@ -72,3 +78,6 @@ p{
 }
 
 
+.dropdown{
+    margin-left: 90%;
+}
