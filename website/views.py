@@ -175,6 +175,18 @@ def account():
     id = current_user.id
     user=Users.query.get_or_404(id)
     return render_template('account.html', user=user)
+
+
+
+
+
+
+
+
+
+
+
+
 @views.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404

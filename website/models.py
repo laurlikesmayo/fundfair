@@ -10,6 +10,7 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String(50), unique=True, nullable = False)
     password = db.Column(db.String(50), nullable = False)
     
+    
 
 class Posts(db.Model):
     id = db.Column(db.Integer, primary_key=True) #gives the post a unique id
