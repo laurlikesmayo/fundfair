@@ -3,7 +3,7 @@ how to migrate new database
 after you make each database you need to migrate
 
 
-flask db migrate -m 'name of migration'
+flask db migrate -m 'name of migration' (can be random name)
 flask db upgrade
 
 
