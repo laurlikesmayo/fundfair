@@ -81,3 +81,18 @@ p{
 .dropdown{
     margin-left: 90%;
 }
+
+
+.my-navbar{
+    background-color: rgb(175, 175, 175);
+
+}
+
+.light{
+    color: white;
+}
+
+
+.light:hover{
+    color: #a8ede4;
+}

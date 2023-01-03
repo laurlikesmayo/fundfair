@@ -6,6 +6,7 @@ from datetime import datetime
 #puts all the users information into the database
 class Users(db.Model, UserMixin):
     id = db.Column("id", db.Integer, primary_key = True)
+    
     username = db.Column(db.String(50), unique=True, nullable = False)
     email = db.Column(db.String(50), unique=True, nullable = False)
     password = db.Column(db.String(50), nullable = False)
