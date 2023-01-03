@@ -29,7 +29,7 @@ class PostForm(FlaskForm):
 
 #app routes
 
-@views.route('login',  methods=['GET', 'POST'] )
+@views.route('/login',  methods=['GET', 'POST'] )
 def login():
     if request.method == "POST":
         username = request.form.get('username')
@@ -58,7 +58,7 @@ def login():
                 
     return render_template("login.html")
 
-@views.route('register',  methods=['GET', 'POST'] )
+@views.route('/register',  methods=['GET', 'POST'] )
 def register():
     if request.method == "POST":
         username = request.form.get('username')
