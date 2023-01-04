@@ -1,1 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap')
+p{
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+}
+
+.text-container {
+    width: 100%;
+    height: 75px;
+    padding: 20px;
+    border: 1px solid #fed;
+  }
+  
+  .text-container p {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .learn-more-btn{
+    margin-left: 65%;
+    
+    height: 35px; width: 100px;
+    align-items: center;
+    
+}

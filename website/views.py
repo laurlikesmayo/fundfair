@@ -91,9 +91,10 @@ def register():
 @views.route('/')
 def home():
     if 'loggedin' in session:
-
-        return render_template("home.html")
+        posts = Posts.query.order_by(Posts.date_added)
+        return render_template("home.html", posts=posts)
     else:
+        flash('You have not been logged in!')
         return redirect(url_for('views.login'))
 
 @login_required
@@ -160,6 +161,7 @@ def edit_post(id):
 @views.route('post/delete/<int:id>')
 def delete_post(id):
     post_to_del = Posts.query.get_or_404(id)
+    id = current_user.id 
     try:
         db.session.delete(post_to_del)
         db.session.commit()

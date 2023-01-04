@@ -30,7 +30,6 @@ ul{list-style-type:none;}
 
 h1{
     color: #7300ff;
-    text-shadow: 2px 2px #5cfff7;
     font-family: 'Caveat Brush', cursive;
     font-size: 25px;
     height: 20px;
@@ -48,12 +47,7 @@ h3{
     
 }
 
-.learn-more-btn{
-    margin-left: 65%;
-    
-    height: 35px; width: 100px;
-    
-}
+
 
 button{
     background-color: #d8d8d8;
@@ -64,7 +58,8 @@ button{
 
 p{
     color: black;
-    font-family: 'Caveat Brush', cursive;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
 }
 
 
@@ -97,3 +92,4 @@ p{
 .light:hover{
     color: #a8ede4;
 }
+

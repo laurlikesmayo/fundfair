@@ -1,10 +1,12 @@
 {% extends "index.html" %}
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
+
 <h1> <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
     <li class = "title-li">
       <h1>Events - Up and coming</h1>
 
-      <button class = "learn-more-btn"> learn more </button>
+      <a href="/posts" class="btn btn-outline-secondary btn-sm learn-more-btn">Learn more</a>
 
     </li>
     
@@ -14,70 +16,20 @@
   <!-- First Photo Grid-->
   
   <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    {% for post in posts %}
     <div  class="w3-quarter">
       <img src="https://media.wired.com/photos/5f74d2f4df8a35780989d792/1:1/w_2160,h_2160,c_limit/Genshin%20Impact%20_Keyart.png" alt="Super Idol's Smile!" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-  
-   
-    </div>
-    
-    
-
-    <div class="w3-quarter">
-      <img src="https://pbs.twimg.com/media/FGNmt_5WYAIkI6H?format=jpg&name=4096x4096" alt="Steak" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
-
-    <div class="w3-quarter">
-      <img src="https://video-images.vice.com/articles/5f7ce58178f74d009cc79ed3/lede/1602020874991-genshin124k.jpeg?crop=0.5625xw:1xh;center,center" alt="Cherries" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
-
-    <div class="w3-quarter">
-      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/31cca890-657d-4f07-9210-b4d6d3d38796/deh9x79-32376130-1c64-4308-b9fc-15deab952a8a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzMxY2NhODkwLTY1N2QtNGYwNy05MjEwLWI0ZDZkM2QzODc5NlwvZGVoOXg3OS0zMjM3NjEzMC0xYzY0LTQzMDgtYjlmYy0xNWRlYWI5NTJhOGEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YMr7L_DvpwCbXKTHq2sm-l63Tv__SfwMHztCB3fAYYE" alt="Pasta and Wine" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
-  </div>
-  
-  <!-- Second Photo Grid-->
-  <div class="w3-row-padding w3-padding-16 w3-center">
-    <div class="w3-quarter">
-      <img src="https://image.api.playstation.com/pr/bam-art/143/455/cee1bdea-9e18-402e-b495-6a449e1fc47b.png" alt="Popsicle" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
-    <div class="w3-quarter">
-      <img src="https://pbs.twimg.com/media/FH8dEuqVcAYho-k?format=jpg&name=4096x4096" alt="Salmon" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
-    <div class="w3-quarter">
-      <img src="https://i.redd.it/mlfq5x4p31371.jpg" alt="Sandwich" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
-    <div class="w3-quarter">
-      <img src="https://i.redd.it/g1mnqddrugd81.png" alt="Croissant" style="width:100%">
-      <h3>Title of Event</h3>
-      <p>hello this is the short description of the event, and the user can click on the post for more information. this is a very nice post </p>
-    </div>
+      <h3>{{ post.title }}</h3>
+      <h6> {{ post.author }}</h6>
+      <h6> {{ post.date_added }}</h6>
+      <div class="text-container">
+      <p class="long-text">{{ post.content }}</p>
+      </div>
+      <a href="{{ url_for('views.post', id=post.id) }}" style="margin-bottom:10px"class="btn btn-outline-secondary">View post</a>
+      </div>
+    {% endfor %}
   </div>
 
-  <!-- Pagination -->
-  <div class="w3-center w3-padding-32">
-    <div class="w3-bar">
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
-      <a href="#" class="w3-bar-item w3-black w3-button">1</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
-      <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
-    </div>
-  </div>
   
   <hr id="about">
 
@@ -89,7 +41,7 @@
       <h4><b>Create your charity event and publish it!</b></h4>
 
       <p>Want to create your own charity event and publish it? Click here to sign up and create one! for more information, you can contact! click the button below to start creating!</p>
-      <button> Lean more </button>
+      <a href="/create" class="btn btn-outline-secondary btn-sm">Learn more</a>
 
     </div>
   </div>
