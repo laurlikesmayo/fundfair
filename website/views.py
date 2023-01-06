@@ -22,12 +22,18 @@ views = Blueprint("views", __name__)
 class PostForm(FlaskForm):
 	title = StringField("Title", validators=[DataRequired()])
 	content = StringField('Content', validators=[DataRequired()])
-	
-	author = StringField("Author")
 	slug = StringField("Slug", validators=[DataRequired()])
 	submit = SubmitField("Submit")
 
+class SearchForm(FlaskForm):
+    searched=StringField("Searched", validators=[DataRequired()])
+
 #app routes
+
+@views.context_processor
+def index():
+    form = SearchForm()
+    return dict(form=form)
 
 @views.route('/login',  methods=['GET', 'POST'] )
 def login():
@@ -61,6 +67,7 @@ def login():
 @views.route('/register',  methods=['GET', 'POST'] )
 def register():
     if request.method == "POST":
+        name= request.form.get('name')
         username = request.form.get('username')
         email = request.form.get('email')
         password1 = request.form.get('password1')
@@ -75,7 +82,7 @@ def register():
         elif len(password1) < 6 or len(username) <6:
             print("Username or password must contain more than 6 characters")
         else:
-            new_user = Users(username = username, email=email, password=generate_password_hash(password1))
+            new_user = Users(name = name, username = username, email=email, password=generate_password_hash(password1))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
@@ -111,12 +118,12 @@ def create():
     if request.method == 'POST':
         title = request.form.get("title")
         content = request.form.get('content')
-        author = request.form.get('author')
+        poster = current_user.id
         slug = request.form.get('slug')
-        post = Posts(title=title, content=content, author=author, slug=slug)
+        post = Posts(title=title, content=content, poster_id=poster, slug=slug)
 
         db.session.add(post)
-        db.session.commit()
+        db.session.commit( )
 
         flash('Event created sucessfully')
         print('post sucessful')
@@ -130,46 +137,56 @@ def post(id):
     post = Posts.query.get_or_404(id)
     return render_template('post.html', post=post)
 
-@login_required
+
 @views.route('/posts')
 def posts():
     posts = Posts.query.order_by(Posts.date_added)
     return render_template("posts.html", posts=posts)
 
+@login_required
 @views.route('/post/edit/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
     post = Posts.query.get_or_404(id)
     form = PostForm()
-    if form.validate_on_submit():
-                
-        post.title = form.title.data
-        post.content = form.content.data
-        post.author =form.author.data
-        post.slug = form.slug.data
+    id=current_user.id
+    if id==post.poster.id:
+        if form.validate_on_submit():
+                    
+            post.title = form.title.data
+            post.content = form.content.data
+            post.slug = form.slug.data
 
-        db.session.add(post)
-        db.session.commit()
-        flash("Post has been updated.")
-        return redirect(url_for("views.post", id=post.id))
-    
-    form.title.data = post.title
-    form.author.data = post.author
-    form.slug.data = post.slug
-    form.content.data=post.content
-    return render_template('edit_post.html', form=form)
+            db.session.add(post)
+            db.session.commit()
+            flash("Post has been updated.")
+            return redirect(url_for("views.post", id=post.id))
+        
+        form.title.data = post.title
+        form.slug.data = post.slug
+        form.content.data=post.content
+        return render_template('edit_post.html', form=form)
+    else:
+        flash('You are not allowed to edit this post!')
+        return redirect(url_for('views.posts'))
 
+@login_required
 @views.route('post/delete/<int:id>')
 def delete_post(id):
     post_to_del = Posts.query.get_or_404(id)
     id = current_user.id 
-    try:
-        db.session.delete(post_to_del)
-        db.session.commit()
-        flash('Blog post was deleted')
-        posts = Posts.query.order_by(Posts.date_added)
-        return render_template("posts.html", posts=posts)
-    except:
-        flash('There was an error. Please try again.')
+    if id == post_to_del.poster.id:
+
+        try:
+            db.session.delete(post_to_del)
+            db.session.commit()
+            flash('Blog post was deleted')
+            posts = Posts.query.order_by(Posts.date_added)
+            return render_template("posts.html", posts=posts)
+        except:
+            flash('There was an error. Please try again.')
+            return redirect(url_for('views.posts'))
+    else:
+        flash('You are not allowed to delete this post!')
         return redirect(url_for('views.posts'))
 
 @views.route('/account')
@@ -178,6 +195,16 @@ def account():
     user=Users.query.get_or_404(id)
     return render_template('account.html', user=user)
 
+@views.route('/search', methods=["POST"])
+def search():
+    form = SearchForm()
+    posts = Posts.query
+    if form.validate_on_submit():
+        post.searched = form.searched.data
+        posts = posts.filter(Posts.content.like('%' + post.searched + '%'))
+        posts= posts.order_by(Posts.title).all()
+        return render_template("search.html", form=form, searched=post.searched, posts=posts)
+        
 @views.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404

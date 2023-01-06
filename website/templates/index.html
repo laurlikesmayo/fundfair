@@ -64,6 +64,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Montserrat', sans-serif;}
         <li class="nav-item ">
           <a class="nav-link light" href="/create">Create</a>
         </li>
+        <form class="d-flex" role="search" method="POST" action="{{url_for('views.search')}}">
+          {{ form.hidden_tag() }}
+          <input class="form-control me-2 searchbar" type="search" placeholder="Search" aria-label="Search" name="searched">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Account
