@@ -234,7 +234,14 @@ def signeddupposts():
     
     return render_template('signedupposts.html', posts=posts)
 
-
+@views.route('/dangerous')
+def dangerous():
+    signups = SignUps.query.order_by(SignUps.id)
+    for i in signups:
+        db.session.delete(i)
+    
+    db.session.commit()
+    return render_template('index.html')
 
 
 @views.errorhandler(404)
