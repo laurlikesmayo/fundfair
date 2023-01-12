@@ -245,10 +245,8 @@ def dangerous():
     for i in signups:
         db.session.delete(i)
     
-
-    
     db.session.commit()
-    return render_template('index.html')
+    return render_template('dangerous.html')
 
 
 @views.errorhandler(404)
