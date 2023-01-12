@@ -228,11 +228,14 @@ def signup(post_id):
 def signeddupposts():
     id = current_user.id
     signups = SignUps.query.filter_by(author=id).all()
-    posts=['']
+    posts=[]
     for sign_up in signups:
         postid=sign_up.post_id
         post = Posts.query.filter_by(id=postid).first()
-        posts.append(post)
+        if not post:
+            pass
+        else:
+            posts.append(post)
     
     return render_template('signedupposts.html', posts=posts)
 
@@ -241,6 +244,8 @@ def dangerous():
     signups = SignUps.query.order_by(SignUps.id)
     for i in signups:
         db.session.delete(i)
+    
+
     
     db.session.commit()
     return render_template('index.html')
