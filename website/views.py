@@ -171,19 +171,21 @@ def edit_post(id):
 @login_required
 @views.route('post/delete/<int:id>')
 def delete_post(id):
+    posts = Posts.query.order_by(Posts.date_added)
     post_to_del = Posts.query.get_or_404(id)
     id = current_user.id 
+    postid=post_to_del.id
     if id == post_to_del.poster.id:
 
         try:
+            
+            
+            
+            signups = SignUps.query.filter_by(post_id=postid).first()
+            db.session.delete(signups)
             db.session.delete(post_to_del)
-            flash('Blog post was deleted')
-            posts = Posts.query.order_by(Posts.date_added)
-            signups = SignUps.query.filter_by(post_id = post_to_del.id).all()
-            for signup in signups:
-                db.session.delete(signup)
-
             db.session.commit()
+            flash('Post successfully deleted')
             return render_template("posts.html", posts=posts)
             
         except:
@@ -226,7 +228,7 @@ def signup(post_id):
 def signeddupposts():
     id = current_user.id
     signups = SignUps.query.filter_by(author=id).all()
-    posts=[]
+    posts=['']
     for sign_up in signups:
         postid=sign_up.post_id
         post = Posts.query.filter_by(id=postid).first()
