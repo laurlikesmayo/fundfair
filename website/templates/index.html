@@ -64,6 +64,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: 'Montserrat', sans-serif;}
         <li class="nav-item ">
           <a class="nav-link light" href="/create">Create</a>
         </li>
+        <li class="nav-item ">
+          <a class="nav-link light" href="/signedupposts">My Events</a>
+        </li>
         <form class="d-flex" role="search" method="POST" action="{{url_for('views.search')}}">
           {{ form.hidden_tag() }}
           <input class="form-control me-2 searchbar" type="search" placeholder="Search" aria-label="Search" name="searched">
