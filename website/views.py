@@ -10,6 +10,7 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
 from flask_wtf.file import FileField
+import smtplib
 
 #module that hashes the password out
 #//meaning will not store the actual password in database and will store value
@@ -26,6 +27,11 @@ class PostForm(FlaskForm):
 
 class SearchForm(FlaskForm):
     searched=StringField("Searched", validators=[DataRequired()])
+
+
+class SignUpForm(FlaskForm):
+    name=StringField("Name", validators=[DataRequired()])
+    email=StringField("Email", validators=[DataRequired()])
 
 #app routes
 
@@ -213,6 +219,42 @@ def search():
         return render_template("search.html", form=form, searched=post.searched, posts=posts)
 
 @login_required
+@views.route('/post/signupform/<int: id>')
+def signupform():
+    form = SignUpForm(id)
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        user = Users.query.filter_by(email=email).first()
+        post= Posts.query.filter_by(id=id).first()
+        if user:
+            port=465
+            smtp_server = "smtp.gmail.com"
+            sender_email="myfundfair@gmail.com"
+            password="ilovemyfundfair"
+            reciever_email= post.poster.id
+            message=f"""
+            You have a sign up for your event!
+            name: {name}
+            email: {email}
+
+            Goodluck for running your chairty!
+
+            Fundfair.co
+            """
+            server = smtplib.SMTB_SLL(smtp_server, port)
+            server.login(sender_email, password)
+            server.sendmail(sender_email, reciever_email, message)
+            server.quit()
+            return redirect(url_for('views.signup', post_id=post.id))
+        else:
+            flash('User does not exist')
+            return redirect(url_for('post.html', id=post.id))
+
+
+
+
+@login_required
 @views.route('/post/signup/<post_id>', methods=["GET", "POST"])
 def signup(post_id):
     id=current_user.id
@@ -241,8 +283,16 @@ def signeddupposts():
 
 @views.route('/dangerous')
 def dangerous():
-    signups = SignUps.query.order_by(SignUps.id)
+    signups = SignUps.query
+    posts= Posts.query
+    users = users.query
     for i in signups:
+        db.session.delete(i)
+    
+    for i in posts:
+        db.session.delete(i)
+
+    for i in users:
         db.session.delete(i)
     
     db.session.commit()
