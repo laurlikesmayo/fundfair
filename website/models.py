@@ -21,3 +21,10 @@ class Posts(db.Model):
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     slug = db.Column(db.String(255))
     poster_id = db.Column(db.Integer, db.ForeignKey('users.id')) #lowercase u bc in database its lowercase cuz its dumb
+    sign_ups = db.relationship('SignUps', backref = 'post')
+
+
+class SignUps(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    author = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
+    post_id= db.Column(db.Integer, db.ForeignKey('posts.id', ondelete="CASCADE"), nullable=False)

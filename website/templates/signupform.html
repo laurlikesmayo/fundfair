@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<br/>
+<h2>Sign up for events</h2>
+<br/>
+<div class="shadow p-3 mb-5 bg-body rounded">
+	<form method="POST">
+		{{ form.hidden_tag() }}
+
+		{{ form.name.label(class="form-label") }}
+
+		{{ form.name(class="form-control") }}
+		<br/>
+
+		 
+		{{ form.email.label(class="form-label") }}
+
+		{{ form.email(class="form-control") }}
+		<br/>
+		
+
+		
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+
+
+	
+</div>
+
+<a href="{{ url_for('views.posts')}}" class="btn btn-outline-secondary btn-sm">Back To Blog</a>
+
+
+
+
+
+
+
+
+{% endblock %}
