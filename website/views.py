@@ -32,6 +32,7 @@ class SearchForm(FlaskForm):
 class SignUpForm(FlaskForm):
     name=StringField("Name", validators=[DataRequired()])
     email=StringField("Email", validators=[DataRequired()])
+    submit = SubmitField("Submit")
 
 #app routes
 
@@ -222,11 +223,12 @@ def search():
 @views.route('/post/signupform/<id>')
 def signupform(id):
     form = SignUpForm()
+    post= Posts.query.filter_by(id=id).first()
     if form.validate_on_submit():
         name = form.name.data
         email = form.email.data
         user = Users.query.filter_by(email=email).first()
-        post= Posts.query.filter_by(id=id).first()
+        
         if user:
             port=465
             smtp_server = "smtp.gmail.com"
@@ -249,7 +251,7 @@ def signupform(id):
             return redirect(url_for('views.signup', post_id=post.id))
         else:
             flash('User does not exist')
-    return redirect(url_for('post.html', id=post.id))
+    return render_template('signupform.html', form=form)
 
 
 
