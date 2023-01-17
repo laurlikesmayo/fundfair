@@ -219,9 +219,9 @@ def search():
         return render_template("search.html", form=form, searched=post.searched, posts=posts)
 
 @login_required
-@views.route('/post/signupform/<int: id>')
-def signupform():
-    form = SignUpForm(id)
+@views.route('/post/signupform/<id>')
+def signupform(id):
+    form = SignUpForm()
     if form.validate_on_submit():
         name = form.name.data
         email = form.email.data
@@ -249,7 +249,7 @@ def signupform():
             return redirect(url_for('views.signup', post_id=post.id))
         else:
             flash('User does not exist')
-            return redirect(url_for('post.html', id=post.id))
+    return redirect(url_for('post.html', id=post.id))
 
 
 
@@ -285,7 +285,7 @@ def signeddupposts():
 def dangerous():
     signups = SignUps.query
     posts= Posts.query
-    users = users.query
+    users = Users.query
     for i in signups:
         db.session.delete(i)
     
