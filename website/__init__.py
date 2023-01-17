@@ -39,7 +39,6 @@ def createapp():
     #gets the user information from the database 
     from .models import Users
     from .models import Posts
-    from .models import SignUps
     createdatabase(app)
 
     #gets the id of the user and filters it
