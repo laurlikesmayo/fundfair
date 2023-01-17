@@ -1,20 +1,27 @@
 {% extends "index.html" %}
-{% block content %}
 
-<h2> You searched for...</h2>
-<h2> {{ searched }}</h2>
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'posts.css')}}">
+
+
+
 {% for post in posts %}
+
 <div class="shadow p-3 mb-5 bg-body rounded">
     <h2>{{ post.title }}</h2>
     By: {{ post.poster.name}}<br/>
     {{ post.date_posted }}<br/>
     {{ post.content }}<br/>
     <a href="{{ url_for('views.post', id=post.id) }}" class="btn btn-outline-secondary">View post</a>
-    <a href="{{ url_for('views.edit_post', id=post.id) }}" class="btn btn-outline-secondary">Edit post</a>
-    <a href="{{ url_for('views.delete_post', id=post.id) }}" class="btn btn-outline-danger">Delete post</a>
 
 </div>
 <br>
 
 {% endfor %}
+
+
+
+
+
 {% endblock %}
+
