@@ -1,6 +1,5 @@
 from flask import Flask, Blueprint, render_template, request, url_for, redirect, session, flash
-from .models import Users
-from .models import Posts
+from .models import Users, Posts, SignUps
 from datetime import timedelta, datetime
 from flask_login import login_user, logout_user, login_required, UserMixin, current_user
 from . import db
@@ -172,16 +171,23 @@ def edit_post(id):
 @login_required
 @views.route('post/delete/<int:id>')
 def delete_post(id):
+    posts = Posts.query.order_by(Posts.date_added)
     post_to_del = Posts.query.get_or_404(id)
     id = current_user.id 
+    postid=post_to_del.id
     if id == post_to_del.poster.id:
 
         try:
+            
+            
+            
+            signups = SignUps.query.filter_by(post_id=postid).first()
+            db.session.delete(signups)
             db.session.delete(post_to_del)
             db.session.commit()
-            flash('Blog post was deleted')
-            posts = Posts.query.order_by(Posts.date_added)
+            flash('Post successfully deleted')
             return render_template("posts.html", posts=posts)
+            
         except:
             flash('There was an error. Please try again.')
             return redirect(url_for('views.posts'))
@@ -197,6 +203,7 @@ def account():
 
 @views.route('/search', methods=["POST"])
 def search():
+    print('search')
     form = SearchForm()
     posts = Posts.query
     if form.validate_on_submit():
@@ -204,7 +211,44 @@ def search():
         posts = posts.filter(Posts.content.like('%' + post.searched + '%'))
         posts= posts.order_by(Posts.title).all()
         return render_template("search.html", form=form, searched=post.searched, posts=posts)
-        
+
+@login_required
+@views.route('/post/signup/<post_id>', methods=["GET", "POST"])
+def signup(post_id):
+    id=current_user.id
+    signup=SignUps(author = id, post_id=post_id)
+    db.session.add(signup)
+    db.session.commit()
+
+    return redirect(url_for('views.post', id=post_id))
+
+
+@login_required
+@views.route('/signedupposts')
+def signeddupposts():
+    id = current_user.id
+    signups = SignUps.query.filter_by(author=id).all()
+    posts=[]
+    for sign_up in signups:
+        postid=sign_up.post_id
+        post = Posts.query.filter_by(id=postid).first()
+        if not post:
+            pass
+        else:
+            posts.append(post)
+    
+    return render_template('signedupposts.html', posts=posts)
+
+@views.route('/dangerous')
+def dangerous():
+    signups = SignUps.query.order_by(SignUps.id)
+    for i in signups:
+        db.session.delete(i)
+    
+    db.session.commit()
+    return render_template('dangerous.html')
+
+
 @views.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
