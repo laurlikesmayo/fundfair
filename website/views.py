@@ -204,7 +204,12 @@ def search():
         posts = posts.filter(Posts.content.like('%' + post.searched + '%'))
         posts= posts.order_by(Posts.title).all()
         return render_template("search.html", form=form, searched=post.searched, posts=posts)
-        
+
+@login_required
+@views.route('/signup')
+def signup(id){
+    
+}
 @views.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html"), 404
