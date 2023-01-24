@@ -10,7 +10,8 @@ from wtforms.validators import DataRequired, EqualTo, Length
 from wtforms.widgets import TextArea
 from flask_ckeditor import CKEditorField
 from flask_wtf.file import FileField
-import smtplib
+import smtplib, ssl
+from email.message import EmailMessage
 
 #module that hashes the password out
 #//meaning will not store the actual password in database and will store value
@@ -82,11 +83,11 @@ def register():
         username_exists = Users.query.filter_by(username = username).first()
         email_exists = Users.query.filter_by(email = email).first()
         if password1 != password2:
-            print("Passwords don't match!")
+            flash("Passwords don't match!")
         elif username_exists or email_exists:
-            print('username or email already exists!')
+            flash('username or email already exists!')
         elif len(password1) < 6 or len(username) <6:
-            print("Username or password must contain more than 6 characters")
+            flash("Username or password must contain more than 6 characters")
         else:
             new_user = Users(name = name, username = username, email=email, password=generate_password_hash(password1))
             db.session.add(new_user)
@@ -220,37 +221,44 @@ def search():
         return render_template("search.html", form=form, searched=post.searched, posts=posts)
 
 @login_required
-@views.route('/post/signupform/<id>')
+@views.route('/post/signupform/<id>', methods = ['GET', 'POST'])
 def signupform(id):
     form = SignUpForm()
     post= Posts.query.filter_by(id=id).first()
-    if form.validate_on_submit():
-        name = form.name.data
-        email = form.email.data
-        user = Users.query.filter_by(email=email).first()
-        
-        if user:
-            port=465
-            smtp_server = "smtp.gmail.com"
-            sender_email="myfundfair@gmail.com"
-            password="ilovemyfundfair"
-            reciever_email= post.poster.id
-            message=f"""
-            You have a sign up for your event!
-            name: {name}
-            email: {email}
+    if request.method == "POST":
+        if form.validate_on_submit():
+            name = form.name.data
+            email = form.email.data
+            user = Users.query.filter_by(email=email).first()
+            
+            if user:
+                port=465
+                smtp_server = 'smtp.gmail.com'
+                sender_email="myfundfair@gmail.com"
+                password="imqvedmyhobaafgn"
+                reciever_email= post.poster.email
+                subject = "Someone signed up for your event!"
+                message=f"""
+You have a sign up for your event!
+name: {name}
+email: {email}
+Goodluck for running your chairty!
 
-            Goodluck for running your chairty!
-
-            Fundfair.co
-            """
-            server = smtplib.SMTB_SLL(smtp_server, port)
-            server.login(sender_email, password)
-            server.sendmail(sender_email, reciever_email, message)
-            server.quit()
-            return redirect(url_for('views.signup', post_id=post.id))
-        else:
-            flash('User does not exist')
+Fundfair.co
+                """
+                em = EmailMessage()
+                em['From'] = sender_email
+                em['To'] = reciever_email
+                em['subject'] = subject
+                em.set_content(message) 
+                
+                context = ssl.create_default_context()
+                with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                    server.login(sender_email, password)
+                    server.sendmail(sender_email, reciever_email, em.as_string())
+                return redirect(url_for('views.signup', post_id=post.id))
+            else:
+                flash('User does not exist')
     return render_template('signupform.html', form=form)
 
 

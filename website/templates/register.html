@@ -7,6 +7,19 @@
     <title>Fundfair - Register</title>
 </head>
 <body>
+    <li id = 'messages-list'>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for msg in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <p id = 'messages'>{{msg}}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+           
+       
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
     <form action = "/register" method="POST">
         <div>
             <label for="name">Enter The Name</label>
