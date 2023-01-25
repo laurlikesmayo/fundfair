@@ -238,24 +238,41 @@ def signupform(id):
                 password="imqvedmyhobaafgn"
                 reciever_email= post.poster.email
                 subject = "Someone signed up for your event!"
+                subject2 = "You have signed up for this event!"
                 message=f"""
-You have a sign up for your event!
-name: {name}
-email: {email}
-Goodluck for running your chairty!
+                You have a sign up for your event!
+                name: {name}
+                email: {email}
 
-Fundfair.co
+                Goodluck for running your chairty!
+
+                Fundfair.co
+                """
+                message2=f"""
+                You have signed up for this event!
+                {post.title}
+
+                have a nice life
+                
                 """
                 em = EmailMessage()
                 em['From'] = sender_email
                 em['To'] = reciever_email
                 em['subject'] = subject
-                em.set_content(message) 
+                em.set_content(message)
+
+                em2 = EmailMessage()
+                em2['From'] = sender_email
+                em2['To'] = email
+                em2['subject'] = subject2
+                em2.set_content(message2) 
                 
                 context = ssl.create_default_context()
                 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
                     server.login(sender_email, password)
                     server.sendmail(sender_email, reciever_email, em.as_string())
+                    server.sendmail(sender_email, email, em2.as_string())
+                flash("Sign up successful!")
                 return redirect(url_for('views.signup', post_id=post.id))
             else:
                 flash('User does not exist')
