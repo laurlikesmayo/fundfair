@@ -14,7 +14,14 @@
     {{ post.content }}<br/>
     Number of sign ups:
     {{post.sign_ups|length}}<br/>
+    {% if signuped==True %}
+
+        <a href="{{ url_for('views.signupform', id=post.id)}}" class = "btn btn-outline-secondary">Un-sign up</a>
+    
+    {% else %}
     <a href="{{ url_for('views.signupform', id=post.id)}}" class = "btn btn-outline-secondary">Sign Up</a>
+    {% endif %}
+
     <a href="{{ url_for('views.edit_post', id=post.id) }}" class="btn btn-outline-secondary">Edit post</a>
     <a href="{{ url_for('views.delete_post', id=post.id) }}" class="btn btn-outline-danger">Delete post</a>
 

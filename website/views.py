@@ -189,8 +189,10 @@ def delete_post(id):
             
             
             
-            signups = SignUps.query.filter_by(post_id=postid).first()
-            db.session.delete(signups)
+            signups = SignUps.query.filter_by(post_id=postid).all()
+            for i in signups:
+
+                db.session.delete(i)
             db.session.delete(post_to_del)
             db.session.commit()
             flash('Post successfully deleted')
@@ -225,6 +227,12 @@ def search():
 def signupform(id):
     form = SignUpForm()
     post= Posts.query.filter_by(id=id).first()
+    currentid = current_user.id
+    signup = SignUps.query.filter_by(author=currentid, post_id=id).first()
+    if signup:
+        db.session.delete(signup)
+        db.session.commit()
+        return render_template("post.html", post=post, signedup=True)
     if request.method == "POST":
         if form.validate_on_submit():
             name = form.name.data
@@ -249,7 +257,8 @@ def signupform(id):
                 Fundfair.co
                 """
                 message2=f"""
-                You have signed up for this event!
+                Hi {name},
+                You have signed up for this event!:
                 {post.title}
 
                 have a nice life
