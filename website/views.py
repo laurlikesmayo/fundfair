@@ -64,9 +64,9 @@ def login():
                 flash('Log in sucessful', 'info ')
                 return redirect(url_for('views.home')) 
             else:
-                print('Wrong Password')
+                flash('Wrong Password')
         else:
-            print('Username does not exist')
+            flash('Username does not exist')
                 
                 
     return render_template("login.html")
@@ -101,7 +101,7 @@ def register():
     return render_template("register.html")
 
 
-@login_required
+
 @views.route('/')
 def home():
     if 'loggedin' in session:
@@ -116,12 +116,18 @@ def home():
 def logout():
     logout_user()
     session.pop('loggedin', None)
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     return redirect(url_for('views.login'))
 
 
 @login_required
 @views.route('/create', methods = ['GET', "POST"])
 def create(): 
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     if request.method == 'POST':
         title = request.form.get("title")
         content = request.form.get('content')
@@ -153,6 +159,9 @@ def posts():
 @login_required
 @views.route('/post/edit/<int:id>', methods=['GET', 'POST'])
 def edit_post(id):
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     post = Posts.query.get_or_404(id)
     form = PostForm()
     id=current_user.id
@@ -178,11 +187,16 @@ def edit_post(id):
 
 @login_required
 @views.route('post/delete/<int:id>')
-def delete_post(id):
+def delete_post(id):\
+    
     posts = Posts.query.order_by(Posts.date_added)
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     post_to_del = Posts.query.get_or_404(id)
     id = current_user.id 
     postid=post_to_del.id
+    
     if id == post_to_del.poster.id:
 
         try:
@@ -204,9 +218,12 @@ def delete_post(id):
     else:
         flash('You are not allowed to delete this post!')
         return redirect(url_for('views.posts'))
-
+@login_required
 @views.route('/account')
 def account():
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     id = current_user.id
     user=Users.query.get_or_404(id)
     return render_template('account.html', user=user)
@@ -225,6 +242,9 @@ def search():
 @login_required
 @views.route('/post/signupform/<id>', methods = ['GET', 'POST'])
 def signupform(id):
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     form = SignUpForm()
     post= Posts.query.filter_by(id=id).first()
     currentid = current_user.id
@@ -297,6 +317,9 @@ def signup(post_id):
     signup=SignUps(author = id, post_id=post_id)
     db.session.add(signup)
     db.session.commit()
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
 
     return redirect(url_for('views.post', id=post_id))
 
@@ -304,6 +327,9 @@ def signup(post_id):
 @login_required
 @views.route('/signedupposts')
 def signeddupposts():
+    if not 'loggedin' in session:
+        flash('You have not been logged in!')
+        return redirect(url_for('views.login'))
     id = current_user.id
     signups = SignUps.query.filter_by(author=id).all()
     posts=[]
@@ -314,6 +340,7 @@ def signeddupposts():
             pass
         else:
             posts.append(post)
+    
     
     return render_template('signedupposts.html', posts=posts)
 
