@@ -1,0 +1,90 @@
+{% extends "index.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
+
+<h1> <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+    <li class = "title-li">
+      <h1>Events - Up and coming</h1>
+
+      <a href="/posts" class="btn btn-outline-secondary btn-sm learn-more-btn">Learn more</a>
+
+    </li>
+    
+
+
+
+  <!-- First Photo Grid-->
+  
+  <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+    {% for post in posts %}
+    <div  class="w3-quarter">
+      <img src="https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png" alt="Super Idol's Smile!" style="width:100%">
+      <h3>{{ post.title }}</h3>
+      <h6> {{ post.author }}</h6>
+      <h6> {{ post.date_added }}</h6>
+      <div class="text-container">
+      <p class="long-text">{{ post.content }}</p>
+      </div>
+      <a href="{{ url_for('views.post', id=post.id) }}" style="margin-bottom:10px"class="btn btn-outline-secondary">View post</a>
+      </div>
+    {% endfor %}
+  </div>
+
+  
+  <hr id="about">
+
+  <!-- About Section -->
+  <div class="w3-container w3-padding-32 w3-center">  
+    <h3>Create your own charity event!</h3><br>
+    <img src="https://thumbs.dreamstime.com/z/angry-executive-shouting-having-disagreement-employee-group-meeting-mad-boss-manager-conflict-office-scolding-criticizing-139894489.jpg" alt="Me" style="display:block;margin:auto" width="1100" height="600" object-fit="cover">
+    <div class="w3-padding-32">
+      <h4><b>Create your charity event and publish it!</b></h4>
+
+      <p>Want to create your own charity event and publish it? Click here to sign up and create one! for more information, you can contact! click the button below to start creating!</p>
+      <a href="/create" class="btn btn-outline-secondary btn-sm">Learn more</a>
+
+    </div>
+  </div>
+  <hr>
+  
+  <!-- Footer -->
+  <footer class="w3-row-padding w3-padding-32">
+    <div class="w3-third">
+      <h3>Contact me!</h3>
+      <p>If you have any questions or inquiries, feel free to email me! I will try my best to reply!</p>
+      <p>Email: <a href="mailto:paknicola@gmail.com" target="_blank">paknicola@gmail.com</a></p>
+    </div>
+  
+    <div class="w3-third">
+      <h3>BLOG POSTS</h3>
+      <ul class="w3-ul w3-hoverable">
+        <li class="w3-padding-16">
+          <img src="/w3images/workshop.jpg" class="w3-left w3-margin-right" style="width:50px">
+          <span class="w3-large">Lorem</span><br>
+          <span>Sed mattis nunc</span>
+        </li>
+        <li class="w3-padding-16">
+          <img src="/w3images/gondol.jpg" class="w3-left w3-margin-right" style="width:50px">
+          <span class="w3-large">Ipsum</span><br>
+          <span>Praes tinci sed</span>
+        </li> 
+      </ul>
+    </div>
+
+    
+
+<!-- End page content -->
+</div>
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script></h1> 
+
+{% endblock %}
